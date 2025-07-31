@@ -20,7 +20,7 @@ const ClosePostModal = () => {
 }
 
 //Cuando se carge el DOM
-window.addEventListener("load", () => {
+window.addEventListener("load", async () => {
     MAIN = document.querySelector("#main");
     MODAL_POST = document.querySelector("#modal-post-section");
 
@@ -30,4 +30,10 @@ window.addEventListener("load", () => {
     BTN_CANCEL_POST = document.querySelector("#btn-post-cancel");
     BTN_CANCEL_POST.addEventListener("click", ClosePostModal); //Evento para cerrar el modal de post
 
+    if(navigator.serviceWorker){
+        const res = await navigator.serviceWorker.register("../sw.js");
+        if(res){
+            console.log("Service Worker registered successfully.");
+        }
+    }
 });
