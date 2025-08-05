@@ -2,6 +2,7 @@ let MAIN;
 let MODAL_POST;
 let BTN_SHOW_POST;
 let BTN_CANCEL_POST;
+let deferredPrompt;
 
 //Funciones
 const ShowModalPost = () => {
@@ -16,8 +17,13 @@ const ShowModalPost = () => {
 const ClosePostModal = () => {
     MAIN.style.display = "block"; //Mostrar el contenido principal
     MODAL_POST.style.transform = "translateY(100vh)"; //Animación de entrada del modal
-
 }
+
+window.addEventListener("beforeinstallprompt", (e) => {
+    console.log("Evento por defecto anulado")
+    e.preventDefault(); //Prevenir el comportamiento por defecto del navegador
+    deferredPrompt = e; //Guardar el evento para usarlo después
+});
 
 //Cuando se carge el DOM
 window.addEventListener("load", async () => {
@@ -31,9 +37,10 @@ window.addEventListener("load", async () => {
     BTN_CANCEL_POST.addEventListener("click", ClosePostModal); //Evento para cerrar el modal de post
 
     if(navigator.serviceWorker){
-        const res = await navigator.serviceWorker.register("../sw.js");
+        const res = await navigator.serviceWorker.register("/sw.js");
         if(res){
             console.log("Service Worker registered successfully.");
         }
     }
 });
+
