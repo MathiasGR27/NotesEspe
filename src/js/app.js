@@ -42,5 +42,16 @@ window.addEventListener("load", async () => {
             console.log("Service Worker registered successfully.");
         }
     }
+    const bannerInstall = document.querySelector("#banner-install");
+    bannerInstall.addEventListener("click", async () => {
+        if(deferredPrompt){
+            deferredPrompt.prompt(); //Mostrar el banner de instalación
+            const response = await deferredPrompt.userChoice; //Esperar la respuesta del usuario
+            if(response.outcome === "accepted"){
+                console.log("Usuario aceptó la instalación de la PWA");
+            }
+        }
+    });
 });
+
 
