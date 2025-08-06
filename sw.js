@@ -14,12 +14,10 @@ self.addEventListener('install', (event) => {
         event.waitUntil(wu); // Asegura que la instalación se complete antes de activar el Service Worker
     });
 });
-
 self.addEventListener('activate', (event) => {
     console.log("Service Worker activated");
     event.waitUntil(clients.claim()); // Asegura que el Service Worker tome el control de las páginas abiertas
 });
-
 self.addEventListener('fetch', (event) => {
     console.log("Cacheando claims");
     console.log(event.request.url);
