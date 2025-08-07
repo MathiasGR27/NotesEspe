@@ -29,12 +29,20 @@ window.addEventListener("load", async () => {
     BTN_SHOW_POST.addEventListener("click", ShowModalPost); //Evento para mostrar el modal de post
     BTN_CANCEL_POST = document.querySelector("#btn-post-cancel");
     BTN_CANCEL_POST.addEventListener("click", ClosePostModal); //Evento para cerrar el modal de post
-    if (navigator.serviceWorker) {
-        const res = await navigator.serviceWorker.register("/sw.js");
-        if (res) {
-            console.log("Service Worker registered successfully.");
-        }
+
+
+   if (navigator.serviceWorker) {
+    const basePath = location.hostname === "localhost" ? "" : "/NotesEspe";
+    try {
+      const res = await navigator.serviceWorker.register(`${basePath}/sw.js`);
+      if (res) {
+        console.log("Service Worker registered successfully.");
+      }
+    } catch (error) {
+      console.error("Service Worker registration failed:", error);
     }
+  }
+
     const bannerInstall = document.querySelector("#banner-install");
     bannerInstall.addEventListener("click", async () => {
         if (deferredPrompt) {
