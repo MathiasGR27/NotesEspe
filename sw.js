@@ -11,14 +11,23 @@ self.addEventListener('install', (event) => {
         } catch (error) {
             reject(error);
         }
-        event.waitUntil(wu); // Asegura que la instalación se complete antes de activar el Service Worker
     });
+    event.waitUntil(wu); // Asegura que la instalación se complete antes de activar el Service Worker
 });
 self.addEventListener('activate', (event) => {
+    //Elimina cache antigua si es necesario
     console.log("Service Worker activated");
     event.waitUntil(clients.claim()); // Asegura que el Service Worker tome el control de las páginas abiertas
 });
 self.addEventListener('fetch', (event) => {
     console.log("Cacheando claims");
-    console.log(event.request.url);
+    // event.respondWith(fetch(event.request.url));
+});
+
+self.addEventListener("sync", (event) => {
+    console.log(event);
+});
+
+self.addEventListener("push", (event) => {
+    console.log("Push notification received",event);
 });
